@@ -1,0 +1,405 @@
+{% extends 'base.html' %}
+{% load weather_filters %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <section id="weather" class="weather p-3">
+    <div class="container">
+      <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-7 text-center">
+          <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-light mb-3">
+            {% if current %}
+              {{ current.date }}
+          </h1>
+          <div class="col-lg-10 text-light">
+            <h3 class="fs-3 fw-bold lh-1 text-body-emphasis text-light mb-3">
+              {{ current.city }}, {{ current.state }}, {{ current.country }}
+            </h3>
+            <img src="{% static current.weather_code|weather_icon %}" alt="Weather Icon">
+            <h5 class="fs-5 fw-bold text-light mb-2">
+              {{ current.temperature_2m|floatformat:1 }}°F
+            </h5>
+          </div>
+          {% else %}
+          <div class="col-lg-10">
+            <h2 class="text-light fw-bold fw-bold">No current weather data avaialble.</h2>
+            <h5 class="text-light">Enter a location to view the weather..</h5>
+          </div>
+          {% endif %}
+        </div>
+
+          <!-- Form -->
+          <div class="col-md-10 mx-auto col-lg-5">
+            <form method="post" class="p-5 p-md-5 border rounded-3 bg-light" method="post">
+              {% csrf_token %}
+              <div class="form-floating mb-3">
+                <input type="text" id="city" name="city" class="form-control" placeholder="City" required>
+                <label for="city">City</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" id="state" name="state" class="form-control" placeholder="State" required>
+                <label for="state">State</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" id="country" name="country" class="form-control" placeholder="Country" required>
+                <label for="country">Country</label>
+              </div>
+              <button type="submit" class="w-100 btn btn-primary rounded-3">Update Location</button>
+            </form>
+            {% if error %}
+              <p class="text-danger">{{ error }}</p>
+            {% endif %}
+          </div>
+      </div>
+
+
+      {% if forecast %}
+        <div class="row">
+          {% for day in forecast %}
+          
+            {% if day.date != current.date %}
+              
+              <!-- Day -->
+              <div class="col-6 col-lg-4 d-flex justify-content-center mt-3">
+          
+                <!-- Card -->
+                <div class="card bg-light text-center">
+                  <div class="card-body">
+                    <h3 class="card-header badge text-uppercase fw-bold text-primary">
+                        {{ day.date }}
+                    </h3>
+                    <div class="row my-3">
+                      <div class="col-12">
+                        <img src="{% static day.weather_code|weather_icon %}" alt="Weather Icon">
+                      </div>
+                    </div>
+
+                    <div class="row mt-2 ">
+                      <div class="col-lg-6">
+                        <div class="text-dark">
+                          <span class="fw-bold">
+                            <i class="fa fa-temperature-arrow-up"></i>
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div class="col-lg-6">
+                        <div class="text-dark">
+                          <span class="fw-bold">
+                            {{ day.temperature_2m_max }}°
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mt-2 ">
+                      <div class="col-lg-6">
+                        <div class="text-dark">
+                          <span class="fw-bold">
+                            <i class="fa fa-temperature-arrow-down"></i>
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div class="col-lg-6">
+                        <div class="text-dark">
+                          <span class="fw-bold">
+                            {{ day.temperature_2m_min }}°
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mt-2">
+                      <div class="col-lg-6">
+                        <i class="fa fa-droplet"></i>
+                      </div>
+                      
+                      <div class="col-lg-6">
+                        <span class="fw-bold">
+                          {{ day.precipitation_probability_mean }}%
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="row mt-2">
+                      <div class="col-lg-6">
+                        <i class="fa fa-cloud-rain"></i>
+                      </div>
+                      
+                      <div class="col-lg-6">
+                        <span class="fw-bold">
+                          {{ day.precipitation_sum }}"
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div class="row mt-2">
+                      <div class="col-md-10 offset-md-1 d-flex justify-content-center align-items-center">
+                        <button id="modalBtn" class="btn btn-primary rounded-5" data-bs-toggle="modal" data-bs-target="#{{day.id}}Modal">
+                        More
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Day's Modal -->
+                <div id="{{day.id}}Modal" class="modal fade modal-sm modal-fullscreen-sm-down" tabindex="-1" role="dialog" aria-labelledby="{{day.date}}ModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down" role="document">
+                    <div class="modal-content">
+                      
+                      <!-- Modal Header -->
+                      <div class="modal-header d-inline justify-content-center">
+                        <div class="row text-center">
+                          <div class="col-sm-6">
+                            <h6 class="modal-title fw-bold text-uppercase text-primary" id="{{day.date}}ModalLabel">{{ day.date }}</h6>
+                          </div>
+                          <div class="col-sm-6">
+                            <img src="{% static day.weather_code|weather_icon %}" alt="Weather Icon">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Modal Body -->
+                      <div class="modal-body">     
+                        
+                      <!-- City -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              City:
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.location.city }}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <!-- State -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              State:
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.location.state }}
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- Country -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Country:
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.location.country }}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <!-- High Temperature -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              High: 
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.temperature_2m_max }}°F
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <!-- Low Temperature -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Low:
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.temperature_2m_min }}°
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- Feels Like Temperature -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Feels: 
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.apparent_temperature_max }}°
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <!-- Sunrise -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Sunrise: 
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.sunrise }}
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- Sunset -->
+                        <hr class="hr-heading" />
+                        <div class="row">                 
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Sunset:
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.sunset }}
+                          </div>
+                        </div>
+                        
+                        <!-- Precipitation Total -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Precipitation:
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.precipitation_sum }}"
+                            </span>
+                          </div>
+                        </div>
+
+                        {% if day.precipitation_sum > 0 %}
+                          <!-- Rain Total -->
+                          <hr class="hr-heading" />
+                          <div class="row">
+                            <div class="col-6">
+                              <span class="text-secondary fw-bold">
+                                Rain: 
+                              </span>
+                            </div>
+                            <div class="col-6">
+                              <span class="text-secondary fw-bold">
+                                {{ day.rain_sum }}"
+                              </span>
+                            </div>
+                          </div>
+
+                          <!-- Snow Totals -->
+                          <hr class="hr-heading" />
+                          <div class="row">
+                            <div class="col-6">
+                              <span class="text-secondary fw-bold">
+                                Snowfall: 
+                              </span>
+                            </div>
+                            <div class="col-6">
+                              <span class="text-secondary fw-bold">
+                                {{ day.snowfall_sum }}"
+                              </span>
+                            </div>
+                          </div>
+                        {% endif %}
+
+                        <!-- Wind Direction -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Wind Direction: 
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.wind_direction_10m_dominant }}°
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- Wind Speed -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              Wind Speed:                       
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.wind_speed_10m_max }} mph
+                            </span>
+                          </div>
+                        </div>
+
+                        <!-- UV Index -->
+                        <hr class="hr-heading" />
+                        <div class="row">
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              UV Index: 
+                            </span>
+                          </div>
+                          <div class="col-6">
+                            <span class="text-secondary fw-bold">
+                              {{ day.uv_index_max }}
+                            </span>
+                          </div>
+                        </div>
+                      <hr class="hr-heading" />
+                      
+                      </div>
+                      
+                      <!-- Close Button -->
+                      <div class="modal-footer d-flex justify-content-center align-items-center">
+                        <button type="button" class="close rounded-3" data-bs-dismiss="modal">
+                          <span class="fw-bold fs-5 text-dark">
+                            Close
+                          </span>
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            {% endif %}    
+          
+          {% endfor %}
+        
+        {% endif %}
+      
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
