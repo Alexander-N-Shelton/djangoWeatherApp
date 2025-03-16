@@ -1,7 +1,5 @@
 # 🌦️ Weather Forecast Web App  
 
-![Django Weather Forecast Web App](images/django_weather.png)
-
 A **Django-based weather forecast web application** that provides **real-time weather updates** and **7-day forecasts** for any location. Users can enter a **city, state, and country**, and the app fetches accurate weather data, including **temperature, precipitation, wind speed, UV index, and more**.  
 
 ## 🚀 Features  
@@ -13,6 +11,8 @@ A **Django-based weather forecast web application** that provides **real-time we
 ✔ **Location Search** – Enter any city, state, and country to fetch local weather.  
 ✔ **Google Geocoding API** – Converts location names into latitude/longitude.  
 ✔ **Open-Meteo API** – Fetches live weather data.  
+
+![Django Weather Forecast Web App](images/django_weather.png)
 
 ## 🛠️ Technologies Used  
 
@@ -58,9 +58,9 @@ A **Django-based weather forecast web application** that provides **real-time we
     python manage.py runserver
     ```
 
-5. Start Celery (optional for automatic weather updates)
+⚠️ **WARNING**: If you're using an API that is not free be careful when running automatic API requests.
 
-    - WARNING: If you're using an API that charges be careful when running automatic api requests.
+5. Start Celery (optional for automatic weather updates)
 
     ```bash
     celery -A your_project_name worker --loglevel=info
@@ -77,6 +77,7 @@ A **Django-based weather forecast web application** that provides **real-time we
 ### Full-screen modals for display on small screens
 
 ![Dynamic modals that cover full-page on small screens](images/django_weather_modal_small_screen.png)
+---
 
 ## Credits
 
