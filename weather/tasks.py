@@ -1,5 +1,5 @@
 # weather/tasks.py
-from celery import shared_task
+from django.utils.timezone import now
 import requests
 from datetime import datetime
 import pytz
@@ -94,9 +94,12 @@ def get_coordinates(address:str) -> tuple:
     
     return data[0]['lat'], data[0]['lon']
 
-@shared_task
 def update_weather(lat: float, lng: float) -> None:
     """Fetch and store weather forecast with sunrise/sunset times."""
+    today = now().date()
+    
+    WeatherForecast.objects.filter(date__lt=today).delete()
+
     location_data = get_address(lat, lng)
     if isinstance(location_data, str):
         print(location_data)
