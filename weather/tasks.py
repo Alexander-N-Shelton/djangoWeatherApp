@@ -9,7 +9,7 @@ from .models import WeatherForecast, WeatherCurrent
 LATITUDE = 38.02931
 LONGITUDE = -78.47668
 
-google_api_key = dotenv.get_key('.env', 'GOOGLE_API_KEY')
+geocoding_api_key = dotenv.get_key('.env', 'GEOCODING_API_KEY')
 
 local_tz = pytz.timezone("America/New_York")
 
@@ -45,52 +45,42 @@ def get_sunrise_sunset_times(lat, lng, date):
 
     return local_sunrise, local_sunset 
 
-def get_address(lat, lng) -> dict:
+def get_address(lat: float, lon: float) -> dict:
     """Fetches an address based on latitude and longitude"""
-    google_geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json"
-    params = {
-        "latlng": f"{lat},{lng}",
-        "key": google_api_key,
-    }
+    reverse_geocoding_url = f'https://geocode.maps.co/reverse?lat={lat}&lon={lon}&api_key={geocoding_api_key}'
+    response = requests.get(reverse_geocoding_url)
 
-    response = requests.get(google_geocoding_url, params)
+    if response.status_code!= 200:
+        print(f'Error: {response["status"]}')
+        return ''
+    
     data = response.json()
 
-    if data['status'] != 'OK':
-        return f'Error: {data['status']}'
+    address = data['address']
+    city = address['city']
+    state = address['state']
+    country = address['country']
     
-    components = data['results'][0]['address_components']
     location_data = {
-        'city': None,
-        'state': None,
-        'country': None,
+        'city': city,
+        'state': state,
+        'country': country,
     }
-    for component in components:
-        if "locality" in component['types']:
-            location_data['city'] = component['short_name']
-        elif "administrative_area_level_1" in component['types']:
-            location_data['state'] = component['short_name']
-        elif "country" in component['types']:
-            location_data['country'] = component['short_name']
 
     return location_data
 
-def get_coordinates(address: str) -> tuple:
+def get_coordinates(address:str) -> tuple:
     """Fetches latitude and longitude from address using google's api."""
-    google_geocoding_url = "https://maps.googleapis.com/maps/api/geocode/json"
-    params = {
-        "address": address,
-        "key": google_api_key,
-    }
-    
-    response = requests.get(google_geocoding_url, params)
-    data = response.json()
+    forward_geocoding_url = f'https://geocode.maps.co/search?q={address}&api_key={geocoding_api_key}'
+    response = requests.get(forward_geocoding_url)
 
-    if data['status'] != "OK":
-        return f'Error: {data['status']}'
+    if response.status_code != 200:
+        print(f'Error: {response['status']}')
+        return None, None
     
-    location = data['results'][0]['geometry']['location']
-    return location['lat'], location['lng']
+    data = response.json()
+    
+    return data[0]['lat'], data[0]['lon']
 
 @shared_task
 def update_weather(lat: float, lng: float) -> None:

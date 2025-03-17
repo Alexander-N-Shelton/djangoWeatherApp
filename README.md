@@ -4,13 +4,14 @@ A **Django-based weather forecast web application** that provides **real-time we
 
 ## 🚀 Features  
 
-✔ **Real-time Weather Data** – Displays the current temperature, humidity, and conditions.  
+✔ **Real-time Weather Data** – Displays the current temperature, precipitation, and other conditions.  
 ✔ **7-Day Forecast** – Get a detailed outlook for the next week.  
 ✔ **Dynamic Weather Icons** – Animated SVG icons change based on the weather.  
 ✔ **Sunrise & Sunset Times** – Accurate calculations based on location.  
 ✔ **Location Search** – Enter any city, state, and country to fetch local weather.  
-✔ **Google Geocoding API** – Converts location names into latitude/longitude.  
+✔ **Geocoding API** – Converts location names into latitude/longitude.  
 ✔ **Open-Meteo API** – Fetches live weather data.  
+✔ **All APIs Are 100% Free** – All APIs used in this project are completely free.
 
 ![Django Weather Forecast Web App](images/django_weather.png)
 
@@ -18,7 +19,7 @@ A **Django-based weather forecast web application** that provides **real-time we
 
 - **Django** – Backend framework  
 - **Celery + Redis** – Background task processing  
-- **Google Geocoding API** – Converts city names to coordinates  
+- **Geocoding API** – Converts city names to coordinates  
 - **Open-Meteo API** – Retrieves weather data  
 - **Bootstrap + FontAwesome** – Responsive UI & icons  
 
@@ -27,7 +28,7 @@ A **Django-based weather forecast web application** that provides **real-time we
 1. Clone the repo:
 
     ```bash
-    git clone https://github.com/your-username/weather-app.git
+    git clone https://github.com/Alexander-N-Shelton/weather-app.git
     cd weather-app
     ```
 
@@ -46,9 +47,12 @@ A **Django-based weather forecast web application** that provides **real-time we
 
     ```ini
     SECRET_KEY=your-django-secret-key
-    GOOGLE_API_KEY=your-google-api-key
-    WEATHER_API_KEY=your-weather-api-key
+    GEOCODE_API_KEY=your-google-api-key
     ```
+
+### Don't have a Geocoding API Key❓
+
+Visit [Geocode.Maps.Co](https://geocode.maps.co/) to get one for free.
 
 4. Run migrations and start the server:
 
@@ -83,3 +87,9 @@ A **Django-based weather forecast web application** that provides **real-time we
 
 - Credit for the amazing animated icons:
 [Makin-Things](https://github.com/Makin-Things/weather-icons)
+
+### Thank you to all these incredible websites for providing free APIs ❤️
+
+- <https://open-meteo.com/>
+- <https://geocode.maps.co/>
+- <https://sunrise-sunset.org/api>
