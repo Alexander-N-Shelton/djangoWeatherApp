@@ -1,12 +1,4 @@
-<footer class="measurementSwitch">
-  <div class="d-flex justify-content-end">
-    <form method="post">
-      {% csrf_token %}
-      <div class="btn-group">
-        <button class="btn btn-primary btn-outline-secondary text-light rounded-3" type="submit" name="toggle_units">
-          Switch to {% if current_units == "Standard" %}Metric {% else %}Standard {% endif %}
-        </button>
-      </div>
-    </form>
-  </div>
+<!-- partials/_footer.html -->
+<footer>
+
 </footer>
