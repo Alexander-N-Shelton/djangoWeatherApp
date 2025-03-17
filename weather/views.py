@@ -27,11 +27,11 @@ def weather_view(request):
     
     if current_weather:
         current_weather.temperature_2m = convert_measurement_system(current_weather.temperature_2m, current_units, 'temp')
-        current_weather.apparent_temperature = convert_measurement_system(current_weather.apparent_temperature, 'temp')
-        current_weather.precipitation = convert_measurement_system(current_weather.precipitation, 'measurement')
-        current_weather.rain = convert_measurement_system(current_weather.rain, 'measurement')
-        current_weather.snowfall = convert_measurement_system(current_weather.snowfall, 'measurement')
-        current_weather.wind_speed = convert_measurement_system(current_weather.wind_speed, 'speed')
+        current_weather.apparent_temperature = convert_measurement_system(current_weather.apparent_temperature, current_units,'temp')
+        current_weather.precipitation = convert_measurement_system(current_weather.precipitation, current_units,'measurement')
+        current_weather.rain = convert_measurement_system(current_weather.rain, current_units,'measurement')
+        current_weather.snowfall = convert_measurement_system(current_weather.snowfall, current_units,'measurement')
+        current_weather.wind_speed = convert_measurement_system(current_weather.wind_speed, current_units,'speed')
 
     
     for day in forecast:
@@ -80,6 +80,6 @@ def weather_view(request):
             'current': current_weather,
             'forecast': forecast,
             'form': form,
-            'current': current_units,
+            'current_units': current_units,
         }
     )

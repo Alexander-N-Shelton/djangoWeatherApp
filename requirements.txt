@@ -2,3 +2,4 @@ django
 requests
 celery
 dotenv
+pytz

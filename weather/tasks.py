@@ -50,24 +50,36 @@ def get_address(lat: float, lon: float) -> dict:
     reverse_geocoding_url = f'https://geocode.maps.co/reverse?lat={lat}&lon={lon}&api_key={geocoding_api_key}'
     response = requests.get(reverse_geocoding_url)
 
-    if response.status_code!= 200:
-        print(f'Error: {response["status"]}')
+    if response.status_code != 200:
+        print(f'Error: {response.status_code}')
         return ''
     
     data = response.json()
 
-    address = data['address']
-    city = address['city']
-    state = address['state']
-    country = address['country']
-    
+    # Handle missing address keys safely
+    address = data.get('address', {})
+
+    city = (
+        address.get('city') or
+        address.get('town') or
+        address.get('village') or
+        address.get('hamlet') or
+        address.get('municipality') or
+        # As a fallback
+        address.get('county')
+    )
+
+    state = address.get('state', 'Unknown State')
+    country = address.get('country', 'Unknown Country')
+
     location_data = {
-        'city': city,
+        'city': city if city else 'Unknown City',  # Final fallback
         'state': state,
         'country': country,
     }
 
     return location_data
+
 
 def get_coordinates(address:str) -> tuple:
     """Fetches latitude and longitude from address using google's api."""
@@ -75,7 +87,7 @@ def get_coordinates(address:str) -> tuple:
     response = requests.get(forward_geocoding_url)
 
     if response.status_code != 200:
-        print(f'Error: {response['status']}')
+        print(f'Error: {response.status_code}')
         return None, None
     
     data = response.json()

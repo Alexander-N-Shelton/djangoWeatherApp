@@ -5,19 +5,19 @@
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <section id="weather" class="weather p-3">
     <div class="container">
-      <div class="row align-items-center g-lg-5 py-5">
+      <div class="row align-items-center text-light g-lg-5 py-5">
         <div class="col-lg-7 text-center">
-          <h1 class="display-4 fw-bold lh-1 text-body-emphasis text-light mb-3">
+          <h1 class="display-5 fw-bold rounded-4 mb-3">
             {% if current %}
               {{ current.date }}
           </h1>
-          <div class="col-lg-10 text-light">
-            <h3 class="fs-3 fw-bold lh-1 text-body-emphasis text-light mb-3">
-              {{ current.city }}, {{ current.state }}, {{ current.country }}
-            </h3>
+          <div class="col-lg-12 text-center">
+              <blockquote class="blockquote fw-bold">
+                {{ current.city }}, {{ current.state }}, {{ current.country }}
+              </blockquote>
             <img src="{% static current.weather_code|weather_icon %}" alt="Weather Icon">
-            <h5 class="fs-5 fw-bold text-light mb-2">
-              {{ current.temperature_2m|floatformat:1 }}°F
+            <h5 class="fs-4 fw-bold  text-light mb-2">
+              {{ current.temperature_2m|floatformat:0 }} °{% if current_units == 'Standard' %}<span class="fst-italic">F{% else %}C{% endif %}</span>
             </h5>
           </div>
           {% else %}
@@ -30,21 +30,21 @@
 
           <!-- Form -->
           <div class="col-md-10 mx-auto col-lg-5">
-            <form method="post" class="p-5 p-md-5 border rounded-3 bg-light" method="post">
+            <form method="post" class="shadow-lg bg-info-subtle text-muted border-0 rounded-3 p-5 p-md-5" method="post">
               {% csrf_token %}
               <div class="form-floating mb-3">
-                <input type="text" id="city" name="city" class="form-control" placeholder="City" required>
+                <input type="text" id="city" name="city" class="form-control bg-dark" placeholder="City" required>
                 <label for="city">City</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="text" id="state" name="state" class="form-control" placeholder="State" required>
+                <input type="text" id="state" name="state" class="form-control bg-dark" placeholder="State" required>
                 <label for="state">State</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="text" id="country" name="country" class="form-control" placeholder="Country" required>
+                <input type="text" id="country" name="country" class="form-control bg-dark" placeholder="Country" required>
                 <label for="country">Country</label>
               </div>
-              <button type="submit" class="w-100 btn btn-primary rounded-3">Update Location</button>
+              <button type="submit" class="w-100 btn btn-primary text-light btn-outline-secondary rounded-3">Update Location</button>
             </form>
             {% if error %}
               <p class="text-danger">{{ error }}</p>
@@ -63,9 +63,9 @@
               <div class="col-6 col-lg-4 d-flex justify-content-center mt-3">
           
                 <!-- Card -->
-                <div class="card bg-light text-center">
-                  <div class="card-body">
-                    <h3 class="card-header badge text-uppercase fw-bold text-primary">
+                <div class="card text-start bg-info-subtle shadow-lg rounded-3">
+                  <div class="card-body fw-bold text-muted-emphasis">
+                    <h3 class="card-header badge text-uppercase fw-bold text-info-emphasis">
                         {{ day.date }}
                     </h3>
                     <div class="row my-3">
@@ -74,69 +74,53 @@
                       </div>
                     </div>
 
-                    <div class="row mt-2 ">
-                      <div class="col-lg-6">
-                        <div class="text-dark">
-                          <span class="fw-bold">
-                            <i class="fa fa-temperature-arrow-up"></i>
-                          </span>
-                        </div>
+                    <!-- High Temperature -->
+                    <div class="row mt-2 text-center">
+                      <div class="col-lg-4">
+                          <i class="fa fa-temperature-arrow-up"></i>
                       </div>
                       
-                      <div class="col-lg-6">
-                        <div class="text-dark">
-                          <span class="fw-bold">
-                            {{ day.temperature_2m_max }}°
-                          </span>
-                        </div>
+                      <div class="col-lg-8">
+                        {{ day.temperature_2m_max|floatformat:0 }} <span class="fst-italic">°{% if current_units == 'Standard' %}F{% else %}C{% endif %}</span>
                       </div>
                     </div>
 
-                    <div class="row mt-2 ">
-                      <div class="col-lg-6">
-                        <div class="text-dark">
-                          <span class="fw-bold">
-                            <i class="fa fa-temperature-arrow-down"></i>
-                          </span>
-                        </div>
+                    <!-- Low Temperature -->
+                    <div class="row mt-2 text-center">
+                      <div class="col-lg-4">
+                        <i class="fa fa-temperature-arrow-down"></i>
                       </div>
                       
-                      <div class="col-lg-6">
-                        <div class="text-dark">
-                          <span class="fw-bold">
-                            {{ day.temperature_2m_min }}°
-                          </span>
-                        </div>
+                      <div class="col-lg-8">
+                        {{ day.temperature_2m_min|floatformat:0 }} <span class="fst-italic">°{% if current_units == 'Standard' %}F {% else %}C{% endif %}</span>
                       </div>
                     </div>
 
-                    <div class="row mt-2">
-                      <div class="col-lg-6">
+                    <!-- Precipitation Chance-->
+                    <div class="row mt-2 text-center">
+                      <div class="col-lg-4">
                         <i class="fa fa-droplet"></i>
                       </div>
                       
-                      <div class="col-lg-6">
-                        <span class="fw-bold">
-                          {{ day.precipitation_probability_mean }}%
-                        </span>
+                      <div class="col-lg-8">
+                        {{ day.precipitation_probability_mean }} <span class="fst-italic">%</span>
                       </div>
                     </div>
 
-                    <div class="row mt-2">
-                      <div class="col-lg-6">
+                    <!-- Precipitation Total -->
+                    <div class="row mt-2 text-center">
+                      <div class="col-lg-4">
                         <i class="fa fa-cloud-rain"></i>
                       </div>
                       
-                      <div class="col-lg-6">
-                        <span class="fw-bold">
-                          {{ day.precipitation_sum }}"
-                        </span>
+                      <div class="col-lg-8">
+                        {{ day.precipitation_sum|floatformat:2 }} <span class="fst-italic small">{% if current_units == "Standard" %}"{% else %}mm</span>{% endif %}
                       </div>
                     </div>
                     
-                    <div class="row mt-2">
+                    <div class="row mt-4">
                       <div class="col-md-10 offset-md-1 d-flex justify-content-center align-items-center">
-                        <button id="modalBtn" class="btn btn-primary rounded-5" data-bs-toggle="modal" data-bs-target="#{{day.id}}Modal">
+                        <button id="modalBtn" class="btn btn-primary text-light btn-outline-secondary rounded-4" data-bs-toggle="modal" data-bs-target="#{{day.id}}Modal">
                         More
                         </button>
                       </div>
@@ -147,13 +131,15 @@
                 <!-- Day's Modal -->
                 <div id="{{day.id}}Modal" class="modal fade modal-sm modal-fullscreen-sm-down" tabindex="-1" role="dialog" aria-labelledby="{{day.date}}ModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content bg-info-subtle">
                       
                       <!-- Modal Header -->
-                      <div class="modal-header d-inline justify-content-center">
-                        <div class="row text-center">
+                      <div class="modal-header d-flex justify-content-center">
+                        <div class="row text-center mt-2">
                           <div class="col-sm-6">
-                            <h6 class="modal-title fw-bold text-uppercase text-primary" id="{{day.date}}ModalLabel">{{ day.date }}</h6>
+                            <h6 class="modal-title fw-bold text-uppercase text-info-emphasis" id="{{day.date}}ModalLabel">
+                              {{ day.date }}
+                            </h6>
                           </div>
                           <div class="col-sm-6">
                             <img src="{% static day.weather_code|weather_icon %}" alt="Weather Icon">
@@ -162,65 +148,21 @@
                       </div>
                       
                       <!-- Modal Body -->
-                      <div class="modal-body">     
-                        
-                      <!-- City -->
-                        <hr class="hr-heading" />
-                        <div class="row">
-                          <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              City:
-                            </span>
-                          </div>
-                          <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.location.city }}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <!-- State -->
-                        <hr class="hr-heading" />
-                        <div class="row">
-                          <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              State:
-                            </span>
-                          </div>
-                          <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.location.state }}
-                            </span>
-                          </div>
-                        </div>
+                      <div class="modal-body text-muted-emphasis fw-bold">
 
-                        <!-- Country -->
-                        <hr class="hr-heading" />
                         <div class="row">
-                          <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Country:
-                            </span>
-                          </div>
-                          <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.location.country }}
-                            </span>
+                          <div class="badge text-bg-primary text-wrap">
+                            {{ day.location.city }} {{ day.location.state }} {{ day.location.country }}
                           </div>
                         </div>
                         
                         <!-- High Temperature -->
-                        <hr class="hr-heading" />
-                        <div class="row">
+                        <div class="row mt-3">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              High: 
-                            </span>
+                            High: 
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.temperature_2m_max }}°F
-                            </span>
+                            {{ day.temperature_2m_max }} <span class="fst-italic">°{% if current_units == 'Standard' %}F{% else %}C{% endif %}</span>
                           </div>
                         </div>
                         
@@ -228,14 +170,10 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Low:
-                            </span>
+                            Low:
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.temperature_2m_min }}°
-                            </span>
+                            {{ day.temperature_2m_min }} <span class="fst-italic">°{% if current_units == 'Standard' %}F{% else %}C{% endif %}</span>
                           </div>
                         </div>
 
@@ -243,14 +181,10 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Feels: 
-                            </span>
+                            Feels: 
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.apparent_temperature_max }}°
-                            </span>
+                            {{ day.apparent_temperature_max }} <span class="fst-italic">°{% if current_units == 'Standard' %}F{% else %}C{% endif %}</span>
                           </div>
                         </div>
                         
@@ -258,14 +192,10 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Sunrise: 
-                            </span>
+                            Sunrise: 
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.sunrise }}
-                            </span>
+                            {{ day.sunrise }}
                           </div>
                         </div>
 
@@ -273,13 +203,10 @@
                         <hr class="hr-heading" />
                         <div class="row">                 
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Sunset:
-                            </span>
+                            Sunset:
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.sunset }}
+                            {{ day.sunset }}
                           </div>
                         </div>
                         
@@ -287,14 +214,10 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Precipitation:
-                            </span>
+                            Precipitation:
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.precipitation_sum }}"
-                            </span>
+                            {{ day.precipitation_sum }} <span class="fst-italic small">{% if current_units == "Standard" %}"{% else %}mm</span>{% endif %}
                           </div>
                         </div>
 
@@ -303,14 +226,10 @@
                           <hr class="hr-heading" />
                           <div class="row">
                             <div class="col-6">
-                              <span class="text-secondary fw-bold">
-                                Rain: 
-                              </span>
+                              Rain: 
                             </div>
                             <div class="col-6">
-                              <span class="text-secondary fw-bold">
-                                {{ day.rain_sum }}"
-                              </span>
+                              {{ day.rain_sum }} <span class="fst-italic small">{% if current_units == "Standard" %}"{% else %}mm</span>{% endif %}
                             </div>
                           </div>
 
@@ -318,14 +237,10 @@
                           <hr class="hr-heading" />
                           <div class="row">
                             <div class="col-6">
-                              <span class="text-secondary fw-bold">
-                                Snowfall: 
-                              </span>
+                              Snowfall: 
                             </div>
                             <div class="col-6">
-                              <span class="text-secondary fw-bold">
-                                {{ day.snowfall_sum }}"
-                              </span>
+                              {{ day.snowfall_sum }} <span class="fst-italic small">{% if current_units == "Standard" %}"{% else %}mm</span>{% endif %}
                             </div>
                           </div>
                         {% endif %}
@@ -334,14 +249,10 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Wind Direction: 
-                            </span>
+                            Wind Direction: 
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.wind_direction_10m_dominant }}°
-                            </span>
+                            {{ day.wind_direction_10m_dominant }} °
                           </div>
                         </div>
 
@@ -349,14 +260,10 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              Wind Speed:                       
-                            </span>
+                            Wind Speed:                       
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.wind_speed_10m_max }} mph
-                            </span>
+                            {{ day.wind_speed_10m_max }} <span class="fst-italic small">{% if current_units == "Standard" %}mph{% else %}km/h</span>{% endif %}
                           </div>
                         </div>
 
@@ -364,24 +271,20 @@
                         <hr class="hr-heading" />
                         <div class="row">
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              UV Index: 
-                            </span>
+                            UV Index: 
                           </div>
                           <div class="col-6">
-                            <span class="text-secondary fw-bold">
-                              {{ day.uv_index_max }}
-                            </span>
+                            {{ day.uv_index_max }}
                           </div>
                         </div>
-                      <hr class="hr-heading" />
                       
+                        <hr class="hr-heading" />
                       </div>
                       
                       <!-- Close Button -->
                       <div class="modal-footer d-flex justify-content-center align-items-center">
-                        <button type="button" class="close rounded-3" data-bs-dismiss="modal">
-                          <span class="fw-bold fs-5 text-dark">
+                        <button type="button" class=" btn btn-primary btn-outline-secondary close rounded-3" data-bs-dismiss="modal">
+                          <span class="fw-bold fs-5 text-light">
                             Close
                           </span>
                         </button>

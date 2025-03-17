@@ -1,15 +1,6 @@
 body {
-  background: var(--bs-gray);
+  background: var(--bs-gray-dark);
 }
-
-.navbar {
-  transition: all 0.5s ease-in-out;
-}
-
-.navbar-sticky {
-  opacity: 0.8;
-}
-
 
 img {
   width: 80px;
@@ -25,15 +16,19 @@ img {
   height: 0.125rem;
   margin-top: 0.125rem;
   border: none;
-  background-color: var(--bs-primary);
+  background-color: var(--bs-secondary);
   opacity: 1;
 }
 
-
-@media (max-width: 991.98px) {
-  .navbar {
-    background: var(--bs-dark);
-  }
+.measurementSwitch {
+  position: fixed;
+  z-index: 20;
+  bottom: 10px;
+  right: 10px;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
 }
 
 /* Small Screens Only */
