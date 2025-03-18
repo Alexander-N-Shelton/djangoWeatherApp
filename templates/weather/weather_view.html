@@ -4,7 +4,7 @@
 {% block content %}
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <section id="weather" class="weather">
-    <div class="container">
+    <div class="container mt-5 p-3">
       <div class="row align-items-center text-light g-lg-5 py-5">
         <div class="col-lg-7 text-center">
           <h1 class="display-5 fw-bold rounded-4 mb-3">
@@ -30,7 +30,7 @@
 
           <!-- Form -->
           <div class="col-md-10 mx-auto col-lg-5">
-            <form method="post" class="shadow-lg bg-info-subtle text-muted border-0 rounded-3 p-5 p-md-5" method="post">
+            <form method="post" class="shadow-lg bg-info-subtle text-muted border border-primary rounded-3 p-5 p-md-5" method="post">
               {% csrf_token %}
               <div class="form-floating mb-3">
                 <input type="text" id="city" name="city" class="form-control bg-dark" placeholder="City" required>
@@ -63,7 +63,7 @@
               <div class="col-6 col-lg-4 d-flex justify-content-center mt-3">
           
                 <!-- Card -->
-                <div class="card text-start bg-info-subtle shadow-lg rounded-3">
+                <div class="card text-start bg-info-subtle shadow-lg border-primary rounded-3">
                   <div class="card-body fw-bold text-muted-emphasis">
                     <h3 class="card-header badge text-uppercase fw-bold text-info-emphasis">
                         {{ day.date }}

@@ -2,6 +2,15 @@ body {
   background: var(--bs-gray-dark);
 }
 
+.navbar {
+  transition: all 0.5s ease-in-out;
+}
+
+.navbar-sticky {
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
 img {
   width: 80px;
   height: 80px;
@@ -48,5 +57,11 @@ img {
 @media (max-width: 575.98px) {
   .hr-heading {
     width: 100%;
+  }
+}
+
+@media (max-width: 767.98) {
+  .navbar {
+    opacity: 1;
   }
 }
