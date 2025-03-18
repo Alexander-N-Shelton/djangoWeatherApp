@@ -29,50 +29,77 @@ A **Django-based weather forecast web application** that provides **real-time we
 
 ## 🔧 Setup Instructions  
 
-1. Clone the repo:
+### 1. Clone the repo
 
-    ```bash
-    git clone https://github.com/Alexander-N-Shelton/weather-app.git
-    cd weather-app
-    ```
+```bash
+git clone https://github.com/Alexander-N-Shelton/weather-app.git
+cd weather-app
+```
 
-2. Create a virtual environment & install dependencies:
+### 2. Create a virtual environment & install dependencies
 
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate # Linux
-    source .venv/Scripts/activate # Windows
-    pip install -r requirements.txt
-    ```
+```bash
+python -m venv .venv
+source .venv/bin/activate # Linux
+source .venv/Scripts/activate # Windows
+pip install -r requirements.txt
+```
 
-3. Set up environment variables:
+### 3. Set up environment variables
 
-    - Create a `.env` file in the project root and add:
+- Create a `.env` file in the project root and add:
 
-    ```ini
-    SECRET_KEY=your-django-secret-key
-    GEOCODE_API_KEY=your-google-api-key
-    ```
+```ini
+SECRET_KEY=your-django-secret-key
+GEOCODE_API_KEY=your-google-api-key
+```
 
 ### Don't have a Geocoding API Key❓
 
 Visit [Geocode.Maps.Co](https://geocode.maps.co/) to get one for free.
 
-4. Run migrations and start the server:
+### 4. Run migrations and start then load the database
 
-    ```bash
-    python manage.py makemigrations
-    python manage.py migrate
-    python manage.py runserver
-    ```
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py shell
+>>> from weather.tasks import update_weather, LATITUDE, LONGITUDE
+>>> update_weather(LATITUDE, LONGITUDE)
+>>> exit()
+```
+
+### 5. Start the server
+
+```bash
+python manage.py runserver
+```
 
 ⚠️ **WARNING**: If you're using an API that is not free be careful when running automatic API requests.
 
-5. Start Celery (optional for automatic weather updates)
+### 6. Start cron job (optional for automatic weather updates)
 
-    ```bash
-    celery -A your_project_name worker --loglevel=info
-    ```
+To automatically update the weather every 15 minutes, add the following to your crontab.
+
+#### 1. Open the crontab editor
+
+```bash
+crontab -e
+```
+
+#### 2. Add this line (adjusting the path as neccessary)
+
+```bash
+*/15 * * * * /usr/bin/python /home/user/djangoProjects/manage.py update_weather
+```
+
+#### 3. Save and exit
+
+#### 4. Restart cron
+
+```bash
+sudo service cron restart 
+```
 
 ### Modals with detailed info of each day's forecast
 
@@ -85,6 +112,7 @@ Visit [Geocode.Maps.Co](https://geocode.maps.co/) to get one for free.
 ### Full-screen modals for display on small screens
 
 ![Dynamic modals that cover full-page on small screens](images/django_weather_modal_small_screen.png)
+
 ---
 
 ## Credits
