@@ -1,5 +1,6 @@
 # weather/tasks.py
 from django.utils.timezone import now
+from django.conf import settings
 import requests
 from datetime import datetime
 import pytz
@@ -9,7 +10,7 @@ from .models import WeatherForecast, WeatherCurrent
 LATITUDE = 38.02931
 LONGITUDE = -78.47668
 
-geocoding_api_key = dotenv.get_key('.env', 'GEOCODING_API_KEY')
+geocoding_api_key = settings.GEOCODING_API_KEY
 
 local_tz = pytz.timezone("America/New_York")
 

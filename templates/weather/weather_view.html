@@ -19,6 +19,12 @@
             <h5 class="fs-4 fw-bold  text-light mb-2">
               {{ current.temperature_2m|floatformat:0 }} °{% if current_units == 'Standard' %}<span class="fst-italic">F{% else %}C{% endif %}</span>
             </h5>
+            <form method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary text-light btn-outline-secondary rounded-3" name="toggle_units">
+                Switch to {% if current.current_units == "Metric" %}Standard{% else %}Metric{% endif %}
+              </button>
+            </form>
           </div>
           {% else %}
           <div class="col-lg-10">

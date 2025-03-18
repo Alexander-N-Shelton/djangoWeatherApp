@@ -4,7 +4,11 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = dotenv.get_key('.env', 'DJANGO_SECRET_KEY')
+secret_key_path = os.path.join(BASE_DIR, '.env')
+
+SECRET_KEY = dotenv.get_key(secret_key_path, 'DJANGO_SECRET_KEY')
+
+GEOCODING_API_KEY = dotenv.get_key(secret_key_path, 'GEOCODING_API_KEY')
 
 DEBUG = True
 

@@ -11,6 +11,23 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.nav-item a:hover {
+  background: var(--bs-secondary);
+}
+
+.fa-stack a:hover .fa-circle {
+  color: var(--bs-primary) !important;
+  /* Change the circle background color */
+  transition: color 0.3s ease-in-out;
+}
+
+.fa-stack a:hover .fa-brands {
+  color: var(--bs-secondary) !important;
+  /* Change the icon color */
+  transition: color 0.3s ease-in-out;
+}
+
+
 img {
   width: 80px;
   height: 80px;
