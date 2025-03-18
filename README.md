@@ -109,10 +109,6 @@ sudo service cron restart
 
 ![Dynamic display of Django Weather Web App on small screens](images/django_weather_small_screen.png)
 
-### Full-screen modals for display on small screens
-
-![Dynamic modals that cover full-page on small screens](images/django_weather_modal_small_screen.png)
-
 ---
 
 ## Credits
