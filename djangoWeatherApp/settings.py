@@ -36,7 +36,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "djangoProjects.urls"
+ROOT_URLCONF = "djangoWeatherApp.urls"
 
 TEMPLATES = [
     {
@@ -54,7 +54,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "djangoProjects.wsgi.application"
+WSGI_APPLICATION = "djangoWeatherApp.wsgi.application"
 
 
 # Database
