@@ -1,49 +1,70 @@
 <!-- Navbar -->
 {% load static %}
 <nav class="navbar navbar-expand-md bg-dark fixed-top">
+
   <div class="container my-1">
+  
     <a href="#" class="navbar-brand">
-      <img src="{% static 'weather-icons/weather.svg' %}" alt="Logo" width="60" height="60">
+      <img src="{% static 'global/weather-icons/weather.svg' %}" alt="Logo" width="60" height="60">
     </a>
+  
     <button type="button" class="navbar-toggler btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#offCanvasNavbar" aria-controls="offCanvasNavbar" aria-expanded="false" aria-label="Toggle Navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+  
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offCanvasNavbar" aria-labelledby="offCanvasNavbar">
+      
       <div class="offcanvas-header">
         <h4 id="offcanvas-header" class="offcanvas-title">Navigation</h4>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
+  
       <div class="offcanvas-body">
+  
         <ul class="navbar-nav ms-auto">
+  
           <li class="nav-item">
             <a href="#" class="nav-link rounded-3 mx-1">Home</a>
           </li>
+  
           {% url 'weather' as wthr %}
           <li class="nav-item">
             <a href="{% url 'weather' %}" class="nav-link rounded-3 mx-1{% if request.get_full_path == wthr %} active bg-primary{% endif %}">Weather</a>
           </li>
+  
           <li class="nav-item">
             <a href="#" class="nav-link rounded-3 mx-1">Maps</a>
           </li>
+  
           <li class="nav-item">
             <a href="#" class="nav-link rounded-3 mx-1">Details</a>
           </li>
+  
         </ul>
+
+        <!-- Social Icons -->
         <span class="nav-item">
+          <!-- GitHub -->
           <span class="fa-stack mt-1">
             <a href="https://github.com/Alexander-N-Shelton/" class="href">
               <i class="fa fa-circle text-secondary fa-stack-2x"></i>
               <i class="fa-brands fa-github text-primary fa-stack-1x"></i>
             </a>
           </span>
+          <!-- LinkedIn -->
           <span class="fa-stack mt-1">
             <a href="https://www.linkedin.com/in/alexander-n-shelton/" class="href">
               <i class="fa fa-circle text-secondary fa-stack-2x"></i>
               <i class="fa-brands fa-linkedin-in text-primary fa-stack-1x"></i>
             </a>
           </span>
-        </span>
-      </div>
-    </div>
-  </div>
+
+        </span> <!-- Social Icons End -->
+
+      </div> <!-- Offcanvas Body End -->
+
+    </div> <!-- Offcanvas End -->
+  
+  </div> <!-- Container End -->
+  
 </nav>

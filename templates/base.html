@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta author="Alexander Shelton" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'global/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/font-awesome.css' %}">
     
     {% block title %} {% endblock %}
   </head>
@@ -19,13 +20,10 @@
     <!-- Main Content -->
     {% block content %} {% endblock %}
     
-    <!-- Footer -->
-    {% include 'partials/_footer.html' %}
-    
     <button id="to-top" class="to-top-btn">
       <i class="fa fa-chevron-up fa-2x"></i>
     </button>
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'global/js/script.js' %}"></script>
+    <script src="{% static 'global/js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>

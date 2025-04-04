@@ -1,19 +1,19 @@
 # settings.py
-import dotenv
-import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from pathlib import Path
+from dotenv import get_key
 
-secret_key_path = os.path.join(BASE_DIR, '.env')
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = dotenv.get_key(secret_key_path, 'DJANGO_SECRET_KEY')
+secret_key_path = BASE_DIR / '.env'
 
-GEOCODING_API_KEY = dotenv.get_key(secret_key_path, 'GEOCODING_API_KEY')
+SECRET_KEY = get_key(secret_key_path, 'DJANGO_SECRET_KEY')
 
-DEBUG = True
+GEOCODING_API_KEY = get_key(secret_key_path, 'GEOCODING_API_KEY')
 
-ALLOWED_HOSTS = ['127.0.0.1']
+DEBUG = False
 
+ALLOWED_HOSTS = ['djangoWeatherWebApp.pythonanywhere.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -41,7 +41,9 @@ ROOT_URLCONF = "djangoWeatherApp.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [ os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [ 
+            BASE_DIR / 'templates'
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -61,7 +63,7 @@ WSGI_APPLICATION = "djangoWeatherApp.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -92,13 +94,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 STATIC_URL = "/static/"
-
-STATICFILES_DIR = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

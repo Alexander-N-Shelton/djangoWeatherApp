@@ -39,4 +39,4 @@ def weather_icon(code, is_forecast=True):
             base_icon = "unknown"
 
     # If it's a forecast, always return the day version
-    return f"weather-icons/{base_icon}-day.svg"
+    return f"global/weather-icons/{base_icon}-day.svg"
