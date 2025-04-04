@@ -4,10 +4,10 @@ import sys
 import django
 
 # Set the Django project base directory
-sys.path.append('/home/djangoWeatherWebApp/djangoProjects')  # Adjust this path!
+sys.path.append('/home/djangoWeatherWebApp/djangoWeatherApp')  # Adjust this path!
 
 # Set Django settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoProjects.settings')  # Update 'weather' if different
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoWeatherApp.settings')  # Update 'weather' if different
 
 # Initialize Django
 django.setup()
