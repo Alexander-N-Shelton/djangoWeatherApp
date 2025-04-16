@@ -14,7 +14,7 @@ GEOCODING_API_KEY = get_key(secret_key_path, 'GEOCODING_API_KEY')
 DEBUG = True
 
 # ALLOWED_HOSTS = ['djangoWeatherWebApp.pythonanywhere.com']
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['djangoWeatherWebApp.pythonanywhere.com']
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
