@@ -120,7 +120,7 @@ sudo service cron restart
 - Credit for the amazing animated icons:
 [Makin-Things](https://github.com/Makin-Things/weather-icons)
 
-### Thank you to all these incredible websites for providing free APIs ❤️
+### Thank you to all these incredible websites for providing free APIs and great documentation. ❤️
 
 - <https://open-meteo.com/>
 - <https://geocode.maps.co/>
