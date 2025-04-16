@@ -22,7 +22,7 @@ A **Django-based weather forecast web application** that provides **real-time we
 ## 🛠️ Technologies Used  
 
 - **Django** – Backend framework  
-- **Celery + Redis** – Background task processing  
+- **Cron** – Background task processing  
 - **Geocoding API** – Converts city names to coordinates  
 - **Open-Meteo API** – Retrieves weather data  
 - **Bootstrap + FontAwesome** – Responsive UI & icons  
@@ -90,7 +90,7 @@ crontab -e
 #### 2. Add this line (adjusting the path as neccessary)
 
 ```bash
-*/15 * * * * /usr/bin/python /home/user/djangoProjects/manage.py update_weather
+*/15 * * * * /usr/bin/python /home/user/djangoWeatherApp/manage.py update_weather
 ```
 
 #### 3. Save and exit
@@ -100,6 +100,10 @@ crontab -e
 ```bash
 sudo service cron restart 
 ```
+
+---
+
+## Note: Navbar is just a placeholder for now
 
 ### Modals with detailed info of each day's forecast
 
