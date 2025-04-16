@@ -33,7 +33,7 @@ A **Django-based weather forecast web application** that provides **real-time we
 
 ```bash
 git clone https://github.com/Alexander-N-Shelton/weather-app.git
-cd weather-app
+cd djangoWeatherApp
 ```
 
 ### 2. Create a virtual environment & install dependencies

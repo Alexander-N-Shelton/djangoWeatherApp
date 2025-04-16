@@ -20,4 +20,4 @@ current = WeatherCurrent.objects.first()
 
 lat, long = current.latitude, current.longitude
 
-update_weather()
+update_weather(lat, long)
